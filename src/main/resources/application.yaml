@@ -1,3 +1,16 @@
 spring:
   application:
     name: inventario-reactivo
+server:
+  port: 8080
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include:
+          - health
+          - info
+logging:
+  level:
+    org.example.inventarioreactivo: debug
