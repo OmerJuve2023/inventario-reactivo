@@ -1,4 +1,6 @@
 package org.example.inventarioreactivo.model;
 
-public class Product {
+import java.math.BigDecimal;
+
+public record Product(Long id, String name, BigDecimal price, int stock) {
 }
