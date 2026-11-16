@@ -1,13 +1,13 @@
-name: ci.yml
+name: CI
 on:
   push:
-    branches:
-      - [ main ]
-  pull_request: [ main ]
+    branches: [main]
+  pull_request:
+    branches: [main]
 
 jobs:
   test:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout
