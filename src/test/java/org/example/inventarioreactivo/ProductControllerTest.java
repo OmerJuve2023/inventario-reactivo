@@ -10,6 +10,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
 import java.math.BigDecimal;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
@@ -82,6 +83,7 @@ public class ProductControllerTest {
     void getProduct() {
         Product product = testClient.post()
                 .uri("api/v1/products")
+                .contentType(MediaType.APPLICATION_JSON)
                 .bodyValue(new ProductRequest("product02", new BigDecimal("0.4"), 12))
                 .exchange()
                 .expectStatus().isCreated()
@@ -95,6 +97,37 @@ public class ProductControllerTest {
                 .uri("api/v1/products/" + product.id())
                 .exchange()
                 .expectStatus().isOk();
+    }
+
+    @Test
+    void updateProduct() {
+        Product product = testClient.post()
+                .uri("/api/v1/products")
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(new ProductRequest("product03", new BigDecimal("10.2"), 10))
+                .exchange()
+                .expectStatus().isCreated()
+                .expectBody(Product.class)
+                .returnResult()
+                .getResponseBody();
+
+        assertNotNull(product);
+
+        testClient.put()
+                .uri("/api/v1/products/" + product.id())
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(Map.of(
+                        "name", "product04",
+                        "price", 2.0,
+                        "stock", 5
+                ))
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody()
+                .jsonPath("$.name").isEqualTo("product04")
+                .jsonPath("$.price").isEqualTo(2.0)
+                .jsonPath("$.stock").isEqualTo(5);
+
     }
 
 
