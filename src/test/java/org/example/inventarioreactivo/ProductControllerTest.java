@@ -78,5 +78,24 @@ public class ProductControllerTest {
                 .expectStatus().isNotFound();
     }
 
+    @Test
+    void getProduct() {
+        Product product = testClient.post()
+                .uri("api/v1/products")
+                .bodyValue(new ProductRequest("product02", new BigDecimal("0.4"), 12))
+                .exchange()
+                .expectStatus().isCreated()
+                .expectBody(Product.class)
+                .returnResult()
+                .getResponseBody();
+
+        assertNotNull(product);
+
+        testClient.get()
+                .uri("api/v1/products/" + product.id())
+                .exchange()
+                .expectStatus().isOk();
+    }
+
 
 }
