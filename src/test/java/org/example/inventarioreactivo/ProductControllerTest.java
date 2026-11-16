@@ -35,7 +35,7 @@ public class ProductControllerTest {
     @Test
     void existProduct() {
         testClient.get()
-                .uri("/api/v1/products/1")
+                .uri("/api/v1/products/9999")
                 .exchange()
                 .expectStatus().isNotFound();
     }
