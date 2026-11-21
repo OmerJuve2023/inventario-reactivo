@@ -1,5 +1,6 @@
 package org.example.inventarioreactivo.controller;
 
+import jakarta.validation.Valid;
 import org.example.inventarioreactivo.model.Product;
 import org.example.inventarioreactivo.model.dto.ProductRequest;
 import org.example.inventarioreactivo.service.ProductService;
@@ -29,12 +30,12 @@ public class ProductController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Mono<Product> create(@RequestBody ProductRequest productRequest) {
+    public Mono<Product> create(@Valid @RequestBody ProductRequest productRequest) {
         return productService.create(productRequest);
     }
 
     @PutMapping("/{id}")
-    public Mono<Product> update(@PathVariable Long id, @RequestBody ProductRequest productRequest) {
+    public Mono<Product> update(@PathVariable Long id,@Valid @RequestBody ProductRequest productRequest) {
         return productService.update(id, productRequest);
     }
 
